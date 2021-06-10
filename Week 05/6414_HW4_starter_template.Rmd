@@ -1,0 +1,266 @@
+---
+title: "Homework 4 Peer Assessment"
+date: "Summer Semester 2020"
+output:
+  pdf_document:
+    extra_dependencies: xcolor
+  word_document: default
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+options(tinytex.verbose = TRUE)
+```
+
+
+## Background
+
+An automobile company aspires to enter a new market by setting up their manufacturing unit there and producing cars locally to give competition to their counterparts. They have contracted an automobile consulting company to understand the factors on which the pricing of cars depends. Specifically, they want to understand the factors affecting the pricing of cars in that market, since those may be very different from other markets. 
+Based on various market surveys, the consulting firm has gathered a large data set of different types of cars across the market. 
+
+The business goal of the consulting firm is to model the price of cars with the available independent variables. It will be used by the management to understand how exactly the prices vary with the independent variables. They can accordingly manipulate the design of the cars, the business strategies, etc., to meet certain price levels. Further, the model will be a good way for management to understand the pricing dynamics of a new market.
+
+The data consists of 202 observations of 9 attributes. Below is a brief description of the columns in the data:
+
+**Indices**: 
+
+* `id` - Unique id of each observation (Integer)
+* `name` - Name of the car (Categorical)
+
+**Attributes**:
+
+1. `doornumber` - Number of doors in a car (Numeric)
+2. `wheelbase` - Weelbase of car (Numeric)
+3. `cylindernumber` - cylinder placed in the car (Numeric)
+4. `enginesize` - Size of car (Numeric)
+5. `stroke` - Stroke or volume inside the engine (Numeric)
+6. `horsepower` - Horsepower (Numeric)
+7. `peakrpm` - car peak rpm (Numeric)
+8. `citympg` - Mileage in city (Numeric)
+9. `highwaympg` - Mileage on highway (Numeric)
+
+**Outcome**: 
+
+* `price` - Price of car (Numeric)
+
+Please load the dataset and then split the dataset into a train and test set in a 80:20 ratio. Use the training set to build the models in Questions 1-6. Use the test set to help evaluate model performance in Question 7.  Please make sure that you are using R version 3.6.X and above, i.e. version 4.X is also acceptable.
+
+<br>
+
+
+
+## Read Data
+
+```{r message=F, warning=F}
+# Clear variables in memory
+rm(list=ls())
+
+# Import the libraries
+library(CombMSC)
+library(boot)
+library(leaps)
+library(MASS)
+library(glmnet)
+
+# Set a seed for reproducibility
+
+# Exclude "id" and "name"
+
+# Split data for traIning and testing
+
+```
+
+
+## Question 1: Full Model
+
+(a) Fit a standard linear regression with the variable `price` as the response and the other attributes as predictors. Name it as `model1`. Display the model summary.
+
+```{r}
+# Your code here...
+
+```
+
+
+(b) Which regression coefficients are statistically significant at the 95% confidence level? At the 99% confidence level?
+
+
+(c) What are the 10-fold and leave one out cross-validation mean squared errors for this model?
+
+```{r, message=F, warning=F}
+# Your code here...
+
+```
+
+
+(d) What are the Mallow's Cp, AIC, and BIC criterion values for this model?
+
+```{r, message=F, warning=F}
+# Your code here...
+
+```
+
+
+(e) Build a new model on the training data with only the variables which coefficients were found to be statistically significant at the 99% confidence level. Call it `model2`. Perform an ANOVA test to compare this new model with the full model(`model1`). Which one would you prefer? Is it good practice to select variables based on statistical significance of individual coefficients? Explain.
+
+```{r}
+# Your code here...
+
+```
+
+
+
+## Question 2: Full Model Search
+
+(a) Compare all possible models using Mallow's Cp. What is the total number of models that can be built from all possible combinations of the predictors? Display a table indicating the variables included in the best model of each size and the corresponding Mallow's Cp value.
+
+Hint: The table must include 9 models. You can use nbest parameter. 
+
+```{r, message=F, warning=F}
+# Your code here...
+
+```
+
+
+(b) How many variables are in the model with the lowest Mallow's Cp value? Which variables are they? Fit this model and call it `model3`. Display the model summary.
+
+```{r}
+# Your code here...
+
+```
+
+
+
+## Question 3: Stepwise Regression
+
+(a) Perform backward stepwise regression using BIC. Allow the minimum model to be the model with only an intercept, and the full model to be `model1`. Display the model summary of your final model. Call it `model4`
+
+```{r}
+# Your code here...
+
+```
+
+
+(b) How many variables are in `model4`? Which regression coefficients are statistically significant at the 99% confidence level?
+
+
+(c) Perform forward stepwise selection with AIC. Allow the minimum model to be the model with only an intercept, and the full model to be `model1`. Display the model summary of your final model. Call it `model5`. Do the variables included in `model5` differ from the variables in `model4`? 
+
+
+```{r}
+# Your code here...
+
+```
+
+
+(d) Compare the adjusted $R^2$, Mallow's Cp, AICs and BICs of the full model(`model1`), the model found in Question 2 (`model3`), and the model found using backward selection with BIC (`model4`). Which model is preferred based on these criteria and why?
+
+```{r}
+# Your code here...
+
+```
+
+
+## Question 4: Ridge Regression
+
+(a) Perform ridge regression on the training set. Use cv.glmnet() to find the lambda value that minimizes the cross-validation error using 10 fold CV.
+
+```{r}
+# Your code here...
+
+```
+
+
+(b) List the value of coefficients at the optimum lambda value.
+
+```{r}
+# Your code here...
+
+```
+
+
+(c) How many variables were selected? Give an explanation for this number.
+
+
+## Question 5: Lasso Regression
+
+
+(a) Perform lasso regression on the training set.Use cv.glmnet() to find the lambda value that minimizes the cross-validation error using 10 fold CV.
+
+```{r, message=F, warning=F}
+# Your code here...
+
+```
+
+
+(b) Plot the regression coefficient path.
+
+```{r}
+# Your code here...
+
+```
+
+
+(c) How many variables were selected? Which are they?
+
+```{r}
+# Your code here...
+
+```
+
+
+## Question 6: Elastic Net
+
+(a) Perform elastic net regression on the training set. Use cv.glmnet() to find the lambda value that minimizes the cross-validation error using 10 fold CV. Give equal weight to both penalties.
+
+```{r}
+# Your code here...
+
+```
+
+
+(b) List the coefficient values at the optimal lambda. How many variables were selected? How do these variables compare to those from Lasso in Question 5?
+
+```{r}
+# Your code here...
+
+```
+
+
+
+## Question 7: Model comparison
+
+(a) Predict `price` for each of the rows in the test data using the full model, and the models found using backward stepwise regression with BIC, ridge regression, lasso regression, and elastic net.
+
+```{r}
+# Your code here...
+
+```
+
+
+(b) Compare the predictions using mean squared prediction error. Which model performed the best?
+
+```{r}
+# Your code here...
+
+```
+
+
+(c) Provide a table listing each method described in Question 7a and the variables selected by each method (see Lesson 5.8 for an example). Which variables were selected consistently?
+
+
+
+|        | Backward Stepwise | Ridge | Lasso  | Elastic Net |
+|--------|-------------|-------------------|--------|-------|
+|doornumber     |        |        |        |        |          
+|wheelbase      |        |        |        |        | 
+|cylindernumber |        |        |        |        |      
+|enginesize     |        |        |        |        | 
+|stroke         |        |        |        |        | 
+|horsepower     |        |        |        |        | 
+|peakrpm        |        |        |        |        |  
+|citympg        |        |        |        |        | 
+|highwaympg     |        |        |        |        | 
+
+
