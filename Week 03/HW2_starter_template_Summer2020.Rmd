@@ -1,0 +1,198 @@
+---
+title: "HW2 Peer Assessment"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Background
+
+Predicting the age of abalone from physical measurements. The age of abalone is determined by cutting the shell through the cone, staining it, and counting the number of rings through a microscope -- a boring and time-consuming task. Other measurements, which are easier to obtain, are used to predict the age. Further information, such as weather patterns and location (hence food availability) may be required to solve the problem.
+
+From the original data examples with missing values were removed (the majority having the predicted value missing), and the ranges of the continuous values have been scaled for use with an ANN (by dividing by 200).
+
+## Data Description
+
+The data consists of the following variables:
+
+1. *Sex*: M, F, and I (infant) (categorical)
+1. *Length*: Longest shell measurement in mm (continuous)
+1. *Diameter*: Perpendicular to length in mm (continuous)
+1. *Height*: Height with meat in shell in mm (continuous)
+1. *Whole*: Weight of whole abalone in grams (continuous)
+1. *Viscera*: Gut weight (after bleeding) in grams (continuous)
+1. *Shell*: Shell weight after being dried in grams (continuous)
+1. *Rings*: Number of rings of the abalone -- corresponds with the age (continuous)
+
+
+## Read the data
+
+```{r}
+# Import library you may need
+library(car)
+# Read the data set
+
+# Split the data into training and testing sets
+
+```
+
+*Please use abalone as your data set for the following questions unless otherwise stated.*
+
+# Question 1: Exploratory Data Analysis [12 points]
+
+*Please use your best judgement when grading this question. Credit should be given to submissions that use evidence from the graphs to support the conclusion, even if it does not exactly match this solution.*
+
+**(a) Create a box plot comparing the response variable, *Rings*, across the three sex categories.  Based on this box plot, does there appear to be a relationship between the predictor and the response?**
+
+```{r}
+# Your code here...
+
+```
+
+
+**(b) Create plots of the response, *Rings*, against each quantitative predictor, namely *Length*, *Diameter*, *Height*, *Whole*, *Viscera*, and *Shell*.  Describe the general trend (direction and form) of each plot.  Are there any potential outliers?**
+
+```{r}
+# Your code here...
+
+```
+
+
+**(c) Display the correlation coefficients for each pair of the variables. Interpret the correlations in the context of the relationships of the predictors to the response and in the context of multicollinearity.**
+
+```{r}
+# Your code here...
+
+```
+
+
+**(d) Based on this exploratory analysis, is it reasonable to assume a multiple linear regression model for the relationship between *Rings* and the predictor variables?**
+
+
+# Question 2: Fitting the Multiple Linear Regression Model [12 points]
+
+*Please fit the full model for Rings without transforming the response variable or predicting variables.*
+
+**(a) Build a multiple linear regression model, called model1, using the response and all predictors.  Display the summary table of the model.**
+
+```{r}
+# Your code here...
+
+```
+
+
+**(b) Is the overall regression significant at an $\alpha$ level of 0.01?**
+
+
+**(c) What is the coefficient estimate for *Viscera*? Interpret this coefficient.**
+
+
+**(d) What is the coefficient estimate for the *Sex* category Male? Interpret this coefficient.**
+
+
+# Question 3: Checking for Outliers and Multicollinearity [9 points]
+
+**(a) Create a plot for the Cook's Distances. Using a threshold Cook's Distance of 1, identify the row numbers of any outliers.**
+
+```{r}
+# Your code here...
+
+```
+
+
+**(b) Remove the outlier(s) from the data set and create a new model, called model2, using all predictors with *Rings* as the response.  Display the summary of this model.**
+
+```{r}
+# Your code here...
+
+```
+
+
+**(c) Display the VIF of each predictor for model2. Using a threshold of 10, what conclusions can you draw?**
+
+```{r}
+# Your code here...
+
+```
+
+
+# Question 4: Checking Model Assumptions [12 points]
+
+*Please use the cleaned data set which have the outlier(s) removed and model2 for answering the following questions*
+
+**(a) Create scatterplots of the standardized residuals of model2 versus each quantitative predictor. Does the linearity assumption appear to hold for all predictors?**
+
+```{r}
+# Your code here...
+
+```
+
+
+**(b) Create a scatterplot of the standardized residuals of model2 versus the fitted values of model2.  Does the constant variance assumption appear to hold?  Do the errors appear uncorrelated?**
+
+```{r}
+# Your code here...
+
+```
+
+
+**(c) Create a histogram and normal QQ plot for the standardized residuals. What conclusions can you draw from these plots?**
+
+```{r}
+# Your code here...
+
+```
+
+
+# Question 5 Model Comparison [9 points]
+
+**(a) Build a third multiple linear regression model using the cleaned data set without the outlier(s), called model3, using only *Sex*, *Length*, *Whole*, and *Shell*.  Display the summary table of the model.**
+
+```{r}
+# Your code here...
+
+```
+
+
+**(b) Compare and discuss the Adjusted R-squared of model3 with model2.**
+
+
+**(c) Conduct a partial F-test comparing model3 with model2, using an $\alpha$ level of 0.01. Provide the following elements of the test: null hypothesis, alternative hypothesis, p-value and conclusions.**
+
+```{r}
+# Your code here...
+
+```
+
+
+# Question 6: Transforming the data [3 points]
+
+**(a) Find the optimal lambda, rounded to the nearest 0.5, for a Box-Cox transformation on model2. What transformation, if any, should be applied according to the lambda value?**
+
+```{r}
+# Your code here...
+
+```
+
+
+# Question 7: Estimation and Prediction [8 points]
+
+**(a) Predict *Rings* for the last 10 rows of data (abaloneTest) using both model2 and model3.  Compare and discuss the mean squared prediction error of both models.**
+
+```{r}
+# Your code here...
+
+```
+
+
+**(b) Suppose you have found an adult female abalone with a length of 0.5mm, a whole weight of 0.4 grams, and a shell weight of 0.3 grams. Using model3, predict the number of rings on this abalone with a 90% prediction interval. Provide an interpretation of your results.**
+
+```{r}
+# Your code here...
+
+```
